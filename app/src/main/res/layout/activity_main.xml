@@ -5,7 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
     <ImageView
         android:id="@+id/coverPhoto"
         android:layout_width="wrap_content"
@@ -15,25 +20,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/FarmerButton"
         android:layout_width="150dp"
         android:layout_height="55dp"
-        android:text="Farmer"
+        android:background="@drawable/button_background"
         android:onClick="FarmerLogin"
-        android:layout_marginBottom="10dp"
+        android:text="Farmer"
+        app:layout_constraintTop_toTopOf="@id/guideline2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/guideline1"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/guideline1" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/ConsumerButton"
         android:layout_width="150dp"
         android:layout_height="55dp"
-        android:text="Consumer"
+        android:background="@drawable/button_background"
         android:onClick="ConsumerLogin"
-        android:layout_marginBottom="10dp"
+        android:text="Consumer"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline2"
         app:layout_constraintLeft_toLeftOf="@+id/guideline1"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -42,17 +49,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.5" />
+
+
+    <!-- Consumer Login View-->
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/KisanCardView"
-        android:visibility="gone"
         android:layout_width="336dp"
         android:layout_height="432dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,103 +71,104 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.457">
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/KisanLogin"
+                android:id="@+id/KisanLoginTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="10dp"
                 android:text="Kisan's Login"
                 android:textSize="30sp"
                 android:textStyle="italic"
-                android:typeface="monospace" />
+                android:typeface="monospace"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
             <EditText
                 android:id="@+id/KisanPhoneNumber"
-                android:layout_width="292dp"
+                android:layout_width="0dp"
                 android:layout_height="42dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="106dp"
+                android:layout_margin="20dp"
                 android:ems="10"
                 android:hint="Phone Number"
                 android:inputType="phone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/KisanLoginTitle" />
             <EditText
-                android:id="@+id/KisanPassword"
-                android:layout_width="288dp"
+                android:id="@+id/KisanOTPEdit"
+                android:layout_width="0dp"
                 android:layout_height="42dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="172dp"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
+                android:layout_margin="20dp"
+                android:hint="Enter OTP here"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/KisanPhoneNumber" />
+            <android.widget.Button
+                android:id="@+id/KisanGenerateOTPButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_background2"
+                android:onClick="KisanGenerateOTPButton"
+                android:text="Generate OTP"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/KisanPhoneNumber" />
-
-
-            <Button
+                app:layout_constraintTop_toBottomOf="@+id/KisanOTPEdit" />
+            <android.widget.Button
                 android:id="@+id/KisanLoginButton"
                 android:layout_width="292dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="140dp"
-                android:background="@drawable/blackb2"
-                android:text="LogIn"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_background"
                 android:onClick="KisanLoginButtonOnClickListener"
-                android:textStyle="bold"
+                android:text="LogIn"
                 android:textColor="@android:color/white"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/KisanPassword" />
-            <Button
+                app:layout_constraintTop_toBottomOf="@+id/KisanGenerateOTPButton" />
+            <android.widget.Button
                 android:id="@+id/KisanCreateAccount"
-                android:layout_width="292dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/blackb2"
-                android:elevation="5dp"
-                android:layout_marginBottom="60dp"
-                android:text="Create Account"
+                android:textColor="@android:color/white"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_background"
                 android:onClick="KisanCreateAccountButtonOnClickListener"
+                android:text="Create Account"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/KisanLoginButton"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/KisanResetPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:text="Forgot Password"
-                android:onClick="KisanForgortPasswordOnClickListener"/>
 
-        </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
+    <!--Kisan Create Account Card View -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/ConsumerCardView"
+        android:id="@+id/KisanCreateAccountCardView"
         android:visibility="gone"
-        android:layout_width="336dp"
-        android:layout_height="432dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        android:layout_margin="30dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -164,9 +176,164 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.457">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_color_selector2"
+            >
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:text="Kisan\n Create Account"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <EditText
+                android:id="@+id/farmerFullNameAC"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textAlignment="center"
+                android:hint="Enter Full Name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <EditText
+                android:id="@+id/farmer_stateAC"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textAlignment="center"
+                android:hint="Enter State"
+                android:layout_margin="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintTop_toBottomOf="@+id/farmerFullNameAC"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <EditText
+                android:id="@+id/farmer_cityAC"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textAlignment="center"
+                android:hint="Enter City"
+                android:layout_margin="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintTop_toBottomOf="@+id/farmer_stateAC"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <EditText
+                android:id="@+id/farmer_AddressAC"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textAlignment="center"
+                android:hint="Enter Full Address"
+                android:layout_margin="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/farmer_cityAC"/>
+            <EditText
+                android:id="@+id/farmer_PhoneNumberAC"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textAlignment="center"
+                android:hint="Enter Phone No."
+                android:layout_margin="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/farmer_AddressAC"/>
+            <android.widget.Button
+                android:id="@+id/farmer_get_otp_AC"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
+                android:text="  Get otp  "
+                android:onClick="farmer_Create_AC_OTP_Generate"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/button_background2"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/farmer_PhoneNumberAC"/>
+            <EditText
+                android:id="@+id/farmer_verify_otp_AC"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:textAlignment="center"
+                android:hint="OTP"
+                android:layout_margin="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/farmer_get_otp_AC"
+                app:layout_constraintTop_toBottomOf="@id/farmer_PhoneNumberAC"/>
+            <android.widget.Button
+                android:id="@+id/finalCreateAC"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:text="Create Account"
+                android:onClick="Create_Farmer_AC"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/button_background2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/farmer_verify_otp_AC"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- Consumer Login View-->
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ConsumerCardView"
+        android:layout_width="336dp"
+        android:layout_height="432dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.457">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/ConsumerLogin"
                 android:layout_width="wrap_content"
@@ -178,6 +345,7 @@
                 android:textSize="30sp"
                 android:textStyle="italic"
                 android:typeface="monospace" />
+
             <EditText
                 android:id="@+id/ConsumerPhoneNumber"
                 android:layout_width="292dp"
@@ -192,6 +360,7 @@
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <EditText
                 android:id="@+id/ConsumerPassword"
                 android:layout_width="288dp"
@@ -216,28 +385,28 @@
                 android:layout_marginBottom="140dp"
                 android:background="@drawable/blackb2"
                 android:elevation="5dp"
-                android:text="LogIn"
                 android:onClick="ConsumerLoginOnClickListener"
-                android:textStyle="bold"
+                android:text="LogIn"
                 android:textColor="@android:color/white"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ConsumerPassword" />
+
             <Button
                 android:id="@+id/ConsumerCreateAccount"
                 android:layout_width="292dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="60dp"
                 android:background="@drawable/blackb2"
                 android:elevation="5dp"
-                android:layout_marginBottom="60dp"
-                android:text="Create Account"
                 android:onClick="ConsumerCreateAccOnClickListener"
+                android:text="Create Account"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/ConsumerResetPassword"
@@ -246,10 +415,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
+                android:onClick="consumerForgotPasswordOnClickListener"
                 android:text="Forgot Password"
-                android:onClick="consumerForgotPasswordOnClickListener"/>
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

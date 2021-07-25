@@ -7,7 +7,6 @@
     android:background="@drawable/main_color_selector"
     android:visibility="visible"
     tools:context=".Famers_Dashboard">
-
     <TextView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -37,18 +36,19 @@
         android:layout_marginRight="10dp"
         android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/guidelineDivider"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/guidelineTop">
 
-        <Button
-            android:id="@+id/add_crop"
+        <android.widget.Button
+            android:id="@+id/add_item_button"
             android:layout_width="150dp"
             android:layout_height="80dp"
-            android:backgroundTint="@color/purple_700"
-            android:text="Add Item for sale"
+            android:background="@drawable/button_background"
+            android:textColor="@color/cream"
+            android:text="Add Item"
             android:textSize="20sp"
+            android:onClick="add_Item_Function"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@+id/guidelineLayout2"
@@ -61,13 +61,15 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
-        <Button
-            android:id="@+id/remove_crop"
+        <android.widget.Button
+            android:id="@+id/remove_item_button"
             android:layout_width="150dp"
             android:layout_height="80dp"
-            android:backgroundTint="@color/purple_700"
+            android:background="@drawable/button_background"
             android:text="Remove Item"
+            android:textColor="@color/white"
             android:textSize="20sp"
+            android:onClick="remove_item_function"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/guidelineLayout2"
             app:layout_constraintRight_toRightOf="parent"
@@ -80,14 +82,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:background="@color/purple_200"
-        android:elevation="20dp"
+        android:background="@drawable/main_color_selector"
+        android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineDivider"
-        app:layout_constraintVertical_bias="0.2">
+        >
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineH7"
@@ -146,6 +147,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -165,5 +167,205 @@
         tools:visibility="visible" />
 
 
+    <!-- Add Item View -->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/add_Item_cardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardElevation="20dp"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_color_selector2"
+            >
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:text="New item Details"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <TextView
+                android:id="@+id/itemNameText"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="Item name: "
+                android:layout_marginStart="20dp"
+                android:textAlignment="viewStart"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <EditText
+                android:id="@+id/itemNameEdit"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textAlignment="center"
+                android:hint="Enter Item Name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintTop_toBottomOf="@+id/itemNameText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:id="@+id/itemQuantityText"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="Quantity in KiloGrams: "
+                android:layout_marginStart="20dp"
+                android:textAlignment="viewStart"
+                android:layout_marginTop="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/itemNameEdit"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <EditText
+                android:id="@+id/itemQuantityEdit"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textAlignment="center"
+                android:hint="Enter Item Quantity"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintTop_toBottomOf="@+id/itemQuantityText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:id="@+id/itemPriceText"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="Item Price per Quantity: "
+                android:layout_marginStart="20dp"
+                android:textAlignment="viewStart"
+                android:layout_marginTop="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/itemQuantityEdit"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <EditText
+                android:id="@+id/itemPriceEdit"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textAlignment="center"
+                android:hint="Enter Price"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/blackb2"
+                app:layout_constraintTop_toBottomOf="@+id/itemPriceText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <android.widget.Button
+                android:id="@+id/add_item_card_button"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Add Item"
+                android:onClick="addItem_to_db"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/button_background2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/itemPriceEdit"/>
+            <android.widget.Button
+                android:id="@+id/clear_item_card"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:text="clear"
+                android:onClick="clearItemCard"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/button_background2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_item_card_button"/>
+            <android.widget.Button
+                android:id="@+id/cancel_item_card"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:text="cancel"
+                android:onClick="cancel_item"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                android:background="@drawable/button_background2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clear_item_card"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/remove_Item_cardView"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardElevation="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_color_selector2">
+
+            <ListView
+                android:id="@+id/itemListCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
