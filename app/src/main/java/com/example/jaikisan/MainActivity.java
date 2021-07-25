@@ -103,8 +103,11 @@ public class MainActivity extends AppCompatActivity {
         KisanCreateAccountCardView.setVisibility(View.GONE);
     }
     public void KisanGenerateOTPButton(View view) {
-        String tempPhoneNumber = kisanPhoneNumber.getText().toString();
-        String phoneNumber = "+91"+tempPhoneNumber;
+        String phoneNumber = kisanPhoneNumber.getText().toString();
+        String temp = "+91"+phoneNumber;
+        generate_OTP(temp);
+    }
+    public void generate_OTP(String phoneNumber){
         if(phoneNumber.length() != 13){
             kisanPhoneNumber.setText("");
             kisanPhoneNumber.requestFocus();
@@ -128,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-                    Toast.makeText(getApplicationContext(),"SMS quota for the project has been exceeded",Toast.LENGTH_LONG).show();
+                    // The SMS quota for the project has been exceeded
                 }
                 // Show a message and update the UI
             }
@@ -155,10 +158,12 @@ public class MainActivity extends AppCompatActivity {
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+
     public void KisanLoginButtonOnClickListener(View view) {
-        verifySignIncode();
+        verifySignIncodeKisan();
     }
-    private void verifySignIncode(){
+    //For Kisan Login Auth only
+    private void verifySignIncodeKisan(){
         String code = kisanOTP.getText().toString();
         if(code.isEmpty()){
             Toast.makeText(getApplicationContext(),"Enter OTP",Toast.LENGTH_LONG).show();
@@ -203,11 +208,51 @@ public class MainActivity extends AppCompatActivity {
         KisanCreateAccountCardView.setVisibility(View.VISIBLE);
     }
     public void farmer_Create_AC_OTP_Generate(View view) {
+        String phoneNumber = "+91"+farmer_PhoneNumberAC.getText().toString();
+        generate_OTP(phoneNumber);
     }
     public void Create_Farmer_AC(View view) {
+        verifySignIncodeKisan_createAC();
+    }
+    private void verifySignIncodeKisan_createAC(){
+        String code = farmer_verify_otp_AC.getText().toString();
+        if(code.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Enter OTP",Toast.LENGTH_LONG).show();
+            return;
+        }
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
+        signInWithPhoneAuthCredential_Create_AC(credential);
+    }
+    private void signInWithPhoneAuthCredential_Create_AC(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_LONG).show();
+                            FirebaseUser user = task.getResult().getUser();
+                            long creationTimestamp = user.getMetadata().getCreationTimestamp();
+                            long lastSignInTimestamp = user.getMetadata().getLastSignInTimestamp();
+                            if (creationTimestamp != lastSignInTimestamp) {
+                                Toast.makeText(getApplicationContext(),"Account Already Exists",Toast.LENGTH_LONG).show();
+                            } else {
+                                //create a database and store all the inputs from create account cardview
+                            }
+                        } else {
+                            // Sign in failed, display a message and update the UI
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                Toast.makeText(getApplicationContext(),"Incorrect Verification code",Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    }
+                });
     }
 
-// Consumer CardView Functions
+    // Consumer CardView Functions
     public void ConsumerLoginOnClickListener(View view) {
     }
 
