@@ -27,6 +27,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     String codeSent;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,25 @@ public class MainActivity extends AppCompatActivity {
         finalCreateAC=findViewById(R.id.finalCreateAC);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+    }
+    @IgnoreExtraProperties
+    public class KisanUser {
+
+        String name,city,state,address,phone;
+
+        public KisanUser() {
+            // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        }
+
+        public KisanUser(String name, String city,String state,String address, String phone) {
+            this.name = name;
+            this.city = city;
+            this.state = state;
+            this.address = address;
+            this.phone = phone;
+        }
 
     }
 
@@ -243,12 +266,7 @@ public class MainActivity extends AppCompatActivity {
                             if (creationTimestamp != lastSignInTimestamp) {
                                 Toast.makeText(getApplicationContext(),"Account Already Exists",Toast.LENGTH_LONG).show();
                             } else {
-                                String name,city,state,address,phone;
-                                name = farmerFullNameAC.getText().toString();
-                                city = farmer_cityAC.getText().toString();
-                                state=farmer_stateAC.getText().toString();
-                                phone=farmer_PhoneNumberAC.getText().toString();
-                                address=farmer_AddressAC.getText().toString();
+                                createNewDBforKisan();
                                 //create a database and store all the inputs from create account cardview
                             }
                         } else {
@@ -261,6 +279,23 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void createNewDBforKisan() {
+        String name,city,state,address,phone;
+        name = farmerFullNameAC.getText().toString();
+        city = farmer_cityAC.getText().toString();
+        state=farmer_stateAC.getText().toString();
+        phone=farmer_PhoneNumberAC.getText().toString();
+        address=farmer_AddressAC.getText().toString();
+        KisanUser NewKisanUser = new KisanUser(name,city,state,address,phone);
+
+        mDatabase.child("KisanUsersData").child(phone).setValue(NewKisanUser);
+        Toast.makeText(getApplicationContext(),"Account Created, Please Login Now",Toast.LENGTH_LONG).show();
+        consumerCardView.setVisibility(View.GONE);
+        kisanCardView.setVisibility(View.VISIBLE);
+        KisanCreateAccountCardView.setVisibility(View.GONE);
+
     }
 
     // Consumer CardView Functions
@@ -288,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
             consumerCardView.setVisibility(View.GONE);
             KisanCreateAccountCardView.setVisibility(View.GONE);
         }
-        if (doubleBackToExitPressed == 2) {
+        else if (doubleBackToExitPressed == 2) {
             finishAffinity();
             System.exit(0);
         }
