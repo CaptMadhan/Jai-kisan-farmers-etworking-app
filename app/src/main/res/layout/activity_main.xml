@@ -257,6 +257,7 @@
                 android:layout_height="40dp"
                 android:textAlignment="center"
                 android:hint="Enter Phone No."
+                android:inputType="phone"
                 android:layout_margin="10dp"
                 android:textSize="30sp"
                 android:textStyle="bold|italic"

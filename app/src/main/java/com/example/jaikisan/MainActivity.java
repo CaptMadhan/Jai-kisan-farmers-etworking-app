@@ -186,6 +186,11 @@ public class MainActivity extends AppCompatActivity {
                             long lastSignInTimestamp = user.getMetadata().getLastSignInTimestamp();
                             if (creationTimestamp == lastSignInTimestamp) {
                                 Toast.makeText(getApplicationContext(),"Please create Account first",Toast.LENGTH_LONG).show();
+                                FirebaseUser tempuser = FirebaseAuth.getInstance().getCurrentUser();
+
+                                if( tempuser != null) {
+                                    tempuser.delete();
+                                }
                             } else {
                                 Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
                                 startActivity(intent);
@@ -238,6 +243,12 @@ public class MainActivity extends AppCompatActivity {
                             if (creationTimestamp != lastSignInTimestamp) {
                                 Toast.makeText(getApplicationContext(),"Account Already Exists",Toast.LENGTH_LONG).show();
                             } else {
+                                String name,city,state,address,phone;
+                                name = farmerFullNameAC.getText().toString();
+                                city = farmer_cityAC.getText().toString();
+                                state=farmer_stateAC.getText().toString();
+                                phone=farmer_PhoneNumberAC.getText().toString();
+                                address=farmer_AddressAC.getText().toString();
                                 //create a database and store all the inputs from create account cardview
                             }
                         } else {
