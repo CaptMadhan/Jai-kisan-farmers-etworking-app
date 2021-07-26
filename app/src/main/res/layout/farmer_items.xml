@@ -65,27 +65,31 @@
             app:layout_constraintRight_toRightOf="@+id/guidelineSubLayout2"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/increaseQuantity"
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:background="@drawable/blackb2"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:text="+"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@+id/guidelineSubLayout1"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/decreaseQuantity"
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:background="@drawable/blackb2"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:text="-"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/guidelineSubLayout2"
             app:layout_constraintRight_toRightOf="parent"
