@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     String codeSent;
-    private DatabaseReference mDatabase;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,25 +93,6 @@ public class MainActivity extends AppCompatActivity {
         finalCreateAC=findViewById(R.id.finalCreateAC);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-    }
-    @IgnoreExtraProperties
-    public class KisanUser {
-
-        String name,city,state,address,phone;
-
-        public KisanUser() {
-            // Default constructor required for calls to DataSnapshot.getValue(User.class)
-        }
-
-        public KisanUser(String name, String city,String state,String address, String phone) {
-            this.name = name;
-            this.city = city;
-            this.state = state;
-            this.address = address;
-            this.phone = phone;
-        }
 
     }
 
@@ -209,11 +191,7 @@ public class MainActivity extends AppCompatActivity {
                             long lastSignInTimestamp = user.getMetadata().getLastSignInTimestamp();
                             if (creationTimestamp == lastSignInTimestamp) {
                                 Toast.makeText(getApplicationContext(),"Please create Account first",Toast.LENGTH_LONG).show();
-                                FirebaseUser tempuser = FirebaseAuth.getInstance().getCurrentUser();
-
-                                if( tempuser != null) {
-                                    tempuser.delete();
-                                }
+                                user.delete();
                             } else {
                                 Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
                                 startActivity(intent);
@@ -234,6 +212,26 @@ public class MainActivity extends AppCompatActivity {
         consumerCardView.setVisibility(View.GONE);
         kisanCardView.setVisibility(View.GONE);
         KisanCreateAccountCardView.setVisibility(View.VISIBLE);
+    }
+    @IgnoreExtraProperties
+    public class KisanUserDetails {
+        public String name;
+        public String city;
+        public String state;
+        public String address;
+        public String phone;
+
+        public KisanUserDetails() {
+            // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        }
+
+        public KisanUserDetails(String name, String city,String state,String address, String phone) {
+            this.name = name;
+            this.city = city;
+            this.state = state;
+            this.address = address;
+            this.phone = phone;
+        }
     }
     public void farmer_Create_AC_OTP_Generate(View view) {
         String phoneNumber = "+91"+farmer_PhoneNumberAC.getText().toString();
@@ -282,19 +280,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createNewDBforKisan() {
+
         String name,city,state,address,phone;
         name = farmerFullNameAC.getText().toString();
         city = farmer_cityAC.getText().toString();
         state=farmer_stateAC.getText().toString();
         phone=farmer_PhoneNumberAC.getText().toString();
         address=farmer_AddressAC.getText().toString();
-        KisanUser NewKisanUser = new KisanUser(name,city,state,address,phone);
 
-        mDatabase.child("KisanUsersData").child(phone).setValue(NewKisanUser);
-        Toast.makeText(getApplicationContext(),"Account Created, Please Login Now",Toast.LENGTH_LONG).show();
-        consumerCardView.setVisibility(View.GONE);
-        kisanCardView.setVisibility(View.VISIBLE);
-        KisanCreateAccountCardView.setVisibility(View.GONE);
+        DAOKisanUserDetails dao = new DAOKisanUserDetails();
+        dao.add(name,city,state,address,phone).addOnSuccessListener(suc->{
+            Toast.makeText(getApplicationContext(),"Account Created, Please Login Now",Toast.LENGTH_LONG).show();
+            consumerCardView.setVisibility(View.GONE);
+            kisanCardView.setVisibility(View.VISIBLE);
+            KisanCreateAccountCardView.setVisibility(View.GONE);
+        }).addOnFailureListener(er->{
+            Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show();
+        });
+        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+         */
+
 
     }
 
