@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -213,26 +214,6 @@ public class MainActivity extends AppCompatActivity {
         kisanCardView.setVisibility(View.GONE);
         KisanCreateAccountCardView.setVisibility(View.VISIBLE);
     }
-    @IgnoreExtraProperties
-    public class KisanUserDetails {
-        public String name;
-        public String city;
-        public String state;
-        public String address;
-        public String phone;
-
-        public KisanUserDetails() {
-            // Default constructor required for calls to DataSnapshot.getValue(User.class)
-        }
-
-        public KisanUserDetails(String name, String city,String state,String address, String phone) {
-            this.name = name;
-            this.city = city;
-            this.state = state;
-            this.address = address;
-            this.phone = phone;
-        }
-    }
     public void farmer_Create_AC_OTP_Generate(View view) {
         String phoneNumber = "+91"+farmer_PhoneNumberAC.getText().toString();
         generate_OTP(phoneNumber);
@@ -256,8 +237,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_LONG).show();
                             FirebaseUser user = task.getResult().getUser();
                             long creationTimestamp = user.getMetadata().getCreationTimestamp();
                             long lastSignInTimestamp = user.getMetadata().getLastSignInTimestamp();
@@ -322,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         consumerCardView.setVisibility(View.GONE);
     }*/
     // Backbutton functions
-    int doubleBackToExitPressed = 1;
+    /*int doubleBackToExitPressed = 1;
     @RequiresApi
     @Override
     public void onBackPressed() {
@@ -332,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
             KisanCreateAccountCardView.setVisibility(View.GONE);
         }
         else if (doubleBackToExitPressed == 2) {
+
             finishAffinity();
             System.exit(0);
         }
@@ -340,14 +320,29 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please press Back again to exit", Toast.LENGTH_SHORT).show();
         }
 
-        new Handler().postDelayed(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressed=1, 2000);
+    }*/
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+
+            super.onBackPressed();
+            return;
+        }
+        kisanCardView.setVisibility(View.GONE);
+        consumerCardView.setVisibility(View.GONE);
+        KisanCreateAccountCardView.setVisibility(View.GONE);
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+
             @Override
             public void run() {
-                doubleBackToExitPressed=1;
+                doubleBackToExitPressedOnce=false;
             }
         }, 2000);
     }
-
-
-
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_color_selector"
     tools:context=".MainActivity">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -27,6 +28,7 @@
         android:background="@drawable/button_background"
         android:onClick="FarmerLogin"
         android:text="Farmer"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="@id/guideline2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -39,6 +41,7 @@
         android:background="@drawable/button_background"
         android:onClick="ConsumerLogin"
         android:text="Consumer"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline2"
         app:layout_constraintLeft_toLeftOf="@+id/guideline1"
