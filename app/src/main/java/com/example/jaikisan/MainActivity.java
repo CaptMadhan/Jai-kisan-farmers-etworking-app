@@ -1,7 +1,6 @@
 package com.example.jaikisan;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,9 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText kisanPhoneNumber,kisanOTP;
     Button kisanLoginButton,kisanCreateButton;
-    TextView kisanForgotPasswordText,consumerForgotPasswordText;
+    //TextView kisanForgotPasswordText,consumerForgotPasswordText;
 
     EditText consumerPhoneNumber,consumerPassword;
     Button consumerLoginButton,consumerCreateButton;
@@ -79,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         consumerPhoneNumber=findViewById(R.id.ConsumerPhoneNumber);
         consumerPassword=findViewById(R.id.ConsumerPassword);
         consumerCreateButton=findViewById(R.id.ConsumerCreateAccount);
-        consumerForgotPasswordText=findViewById(R.id.ConsumerResetPassword);
+        //consumerForgotPasswordText=findViewById(R.id.ConsumerResetPassword);
 
         KisanCreateAccountCardView =findViewById(R.id.KisanCreateAccountCardView);
 
@@ -125,19 +120,19 @@ public class MainActivity extends AppCompatActivity {
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
-            public void onVerificationCompleted(PhoneAuthCredential credential) {
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
             }
 
             @Override
-            public void onVerificationFailed(FirebaseException e) {
+            public void onVerificationFailed(@NonNull FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
                 Log.w(TAG, "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    // Invalid request
+                    Toast.makeText(getApplicationContext(), "Invalid Request", Toast.LENGTH_SHORT).show();
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-                    // The SMS quota for the project has been exceeded
+                    Toast.makeText(getApplicationContext(), "SMS quota for the project has been exceeded", Toast.LENGTH_SHORT).show();
                 }
                 // Show a message and update the UI
             }
@@ -166,7 +161,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void KisanLoginButtonOnClickListener(View view) {
-        verifySignIncodeKisan();
+        Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
+        startActivity(intent);
+        //uncomment the below line after testing
+        //verifySignIncodeKisan();
     }
     //For Kisan Login Auth only
     private void verifySignIncodeKisan(){
@@ -187,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_LONG).show();
-                            FirebaseUser user = task.getResult().getUser();
-                            long creationTimestamp = user.getMetadata().getCreationTimestamp();
-                            long lastSignInTimestamp = user.getMetadata().getLastSignInTimestamp();
+                            FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();
+                            long creationTimestamp = Objects.requireNonNull(Objects.requireNonNull(user).getMetadata()).getCreationTimestamp();
+                            long lastSignInTimestamp = Objects.requireNonNull(user.getMetadata()).getLastSignInTimestamp();
                             if (creationTimestamp == lastSignInTimestamp) {
                                 Toast.makeText(getApplicationContext(),"Please create Account first",Toast.LENGTH_LONG).show();
                                 user.delete();
@@ -237,8 +235,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = task.getResult().getUser();
-                            long creationTimestamp = user.getMetadata().getCreationTimestamp();
+                            FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();
+                            assert user != null;
+                            long creationTimestamp = Objects.requireNonNull(user.getMetadata()).getCreationTimestamp();
                             long lastSignInTimestamp = user.getMetadata().getLastSignInTimestamp();
                             if (creationTimestamp != lastSignInTimestamp) {
                                 Toast.makeText(getApplicationContext(),"Account Already Exists",Toast.LENGTH_LONG).show();
@@ -266,16 +265,18 @@ public class MainActivity extends AppCompatActivity {
         state=farmer_stateAC.getText().toString();
         phone=farmer_PhoneNumberAC.getText().toString();
         address=farmer_AddressAC.getText().toString();
+        if(name.isEmpty()||city.isEmpty()||state.isEmpty()||phone.isEmpty()||address.isEmpty()){
+            Toast.makeText(getApplicationContext(), "Please fill the required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        DAOKisanUserDetails dao = new DAOKisanUserDetails();
+        DAOKisan dao = new DAOKisan();
         dao.add(name,city,state,address,phone).addOnSuccessListener(suc->{
             Toast.makeText(getApplicationContext(),"Account Created, Please Login Now",Toast.LENGTH_LONG).show();
             consumerCardView.setVisibility(View.GONE);
             kisanCardView.setVisibility(View.VISIBLE);
             KisanCreateAccountCardView.setVisibility(View.GONE);
-        }).addOnFailureListener(er->{
-            Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show();
-        });
+        }).addOnFailureListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show());
         /*FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
@@ -294,36 +295,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void consumerForgotPasswordOnClickListener(View view) {
     }
-    /*@Override
-    public void onBackPressed()
-    {
-        kisanCardView.setVisibility(View.GONE);
-        consumerCardView.setVisibility(View.GONE);
-    }*/
-    // Backbutton functions
-    /*int doubleBackToExitPressed = 1;
-    @RequiresApi
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressed == 1) {
-            kisanCardView.setVisibility(View.GONE);
-            consumerCardView.setVisibility(View.GONE);
-            KisanCreateAccountCardView.setVisibility(View.GONE);
-        }
-        else if (doubleBackToExitPressed == 2) {
 
-            finishAffinity();
-            System.exit(0);
-        }
-        else {
-            doubleBackToExitPressed++;
-            Toast.makeText(this, "Please press Back again to exit", Toast.LENGTH_SHORT).show();
-        }
-
-        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressed=1, 2000);
-    }*/
+    //Back Button functions
     boolean doubleBackToExitPressedOnce = false;
-
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
