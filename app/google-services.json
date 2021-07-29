@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "924723053754",
+    "project_id": "jai-kisan-fb259",
+    "storage_bucket": "jai-kisan-fb259.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924723053754:android:9748f84ef8c14b935f2e83",
+        "android_client_info": {
+          "package_name": "com.example.jaikisan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924723053754-m3pipqv3t01vnssjbfkacpjkv9k6rd2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiLkPb4uJo-uKONiRcnPZGescUc1sy0UM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924723053754-m3pipqv3t01vnssjbfkacpjkv9k6rd2m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
