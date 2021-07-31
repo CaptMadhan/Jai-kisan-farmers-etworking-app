@@ -89,7 +89,7 @@ public class Famers_Dashboard extends AppCompatActivity {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
                 // A new comment has been added, add it to the displayed list
-                Comment comment = dataSnapshot.getValue(Comment.class);
+                //Comment comment = dataSnapshot.getValue(Comment.class);
                 // ...
             }
 
