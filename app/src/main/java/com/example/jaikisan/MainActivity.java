@@ -282,7 +282,11 @@ public class MainActivity extends AppCompatActivity {
 
         myRef.setValue("Hello, World!");
          */
-
+        farmerFullNameAC.setText("");
+        farmer_cityAC.setText("");
+        farmer_stateAC.setText("");
+        farmer_PhoneNumberAC.setText("");
+        farmer_AddressAC.setText("");
 
     }
 
