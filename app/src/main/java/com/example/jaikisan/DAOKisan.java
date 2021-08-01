@@ -15,7 +15,7 @@ public class DAOKisan {
     public Task<Void> addItems(String itemName, String quantity,String price,String userID){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         databaseReference = db.getReference("Kisan_Items");
-        KisanItems items = new KisanItems(itemName,quantity,price,userID);
+        KisanItems items = new KisanItems(itemName,quantity,price);
         return databaseReference.child(userID).child(itemName).setValue(items);
     }
 
