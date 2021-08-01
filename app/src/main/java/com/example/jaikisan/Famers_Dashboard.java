@@ -36,6 +36,7 @@ public class Famers_Dashboard extends AppCompatActivity {
     ListView itemListCard;
     String[] itemNameArray;
     List<String> itemNameList = new ArrayList<>();
+    List<KisanItems> kisanItemsList = new ArrayList<>();
     DatabaseReference databaseReference;
 
     @Override
@@ -57,8 +58,27 @@ public class Famers_Dashboard extends AppCompatActivity {
         itemListCard = findViewById(R.id.itemListCard);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        getData();
 
+    }
+    void getData(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        // To retreive data and store items
+        databaseReference.child("Kisan_Items").child("+919620533961"/*user.getPhoneNumber()*/)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            KisanItems items = snapshot.getValue(KisanItems.class);
+                            kisanItemsList.add(items);
+                           //Toast.makeText(getApplicationContext(),items.quantity , Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
     public void add_Item_Function(View view) {
@@ -72,7 +92,7 @@ public class Famers_Dashboard extends AppCompatActivity {
         remove_Item_cardView.setVisibility(View.VISIBLE);
 
         // To retreive data and store item name in itemNameList
-        databaseReference.child("Kisan_Items").child(user.getPhoneNumber())
+        databaseReference.child("Kisan_Items").child("+919620533961")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
