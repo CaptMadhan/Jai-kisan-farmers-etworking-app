@@ -68,7 +68,6 @@ public class Famers_Dashboard extends AppCompatActivity {
 
     public void remove_item_function(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        assert user != null;
         add_Item_cardView.setVisibility(View.GONE);
         remove_Item_cardView.setVisibility(View.VISIBLE);
 
@@ -80,8 +79,7 @@ public class Famers_Dashboard extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             KisanItems items = snapshot.getValue(KisanItems.class);
                             itemNameList.add(items.itemName);
-                            Toast.makeText(getApplicationContext(),items.itemName , Toast.LENGTH_LONG).show();
-
+                            //Toast.makeText(getApplicationContext(),items.itemName , Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -96,24 +94,11 @@ public class Famers_Dashboard extends AppCompatActivity {
                 itemNameArray
         );
         itemListCard.setAdapter(adapter);
+        itemNameList.clear();
     }
 
 
-        /*KisanItems demo1 = new KisanItems("demo1","50","60");
-        KisanItems demo2 = new KisanItems("demo2","506","606");
-        Map<String,String> map = new HashMap<String, String>();
 
-        map.put(user.getPhoneNumber(),demo1.itemName);
-        map.put(user.getPhoneNumber(),demo2.itemName);
-        String[] itemNameArray = map.values().toArray(new String[0]);
-
-        ArrayAdapter adapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                itemNameArray
-        );
-        itemListCard.setAdapter(adapter);
-         */
 // CardView Add Item
     public void cancel_item(View view) {
         remove_Item_cardView.setVisibility(View.GONE);
