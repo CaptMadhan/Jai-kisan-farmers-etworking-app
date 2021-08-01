@@ -161,10 +161,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void KisanLoginButtonOnClickListener(View view) {
-        //Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
-        //startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
+        startActivity(intent);
         //uncomment the below line after testing
-        verifySignIncodeKisan();
+        //verifySignIncodeKisan();
     }
     //For Kisan Login Auth only
     private void verifySignIncodeKisan(){

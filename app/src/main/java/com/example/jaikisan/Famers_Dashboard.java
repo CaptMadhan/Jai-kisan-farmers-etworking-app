@@ -4,48 +4,38 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Comment;
-
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static android.content.ContentValues.TAG;
-
 public class Famers_Dashboard extends AppCompatActivity {
-    Button add_itemButton,remove_itemButton;
+    Button add_itemButton, remove_itemButton;
     RecyclerView recyclerView;
-    CardView LogOutAlertBoxCard,remove_Item_cardView,add_Item_cardView;
+    CardView LogOutAlertBoxCard, remove_Item_cardView, add_Item_cardView;
 
-    EditText itemNameEdit,itemQuantityEdit,itemPriceEdit;
+    EditText itemNameEdit, itemQuantityEdit, itemPriceEdit;
 
     ListView itemListCard;
     String[] itemNameArray;
-    Map<String,String> map = new HashMap<String, String>();
+    List<String> itemNameList = new ArrayList<>();
     DatabaseReference databaseReference;
 
     @Override
@@ -54,69 +44,19 @@ public class Famers_Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_famers_dashboard);
         Objects.requireNonNull(getSupportActionBar()).hide();
         add_itemButton = findViewById(R.id.add_item_button);
-        remove_itemButton=findViewById(R.id.remove_item_button);
-        recyclerView=findViewById(R.id.recyclerview);
+        remove_itemButton = findViewById(R.id.remove_item_button);
+        recyclerView = findViewById(R.id.recyclerview);
 
-        LogOutAlertBoxCard=findViewById(R.id.LogOutAlertBoxCard);
-        remove_Item_cardView=findViewById(R.id.remove_Item_cardView);
-        add_Item_cardView=findViewById(R.id.add_Item_cardView);
+        LogOutAlertBoxCard = findViewById(R.id.LogOutAlertBoxCard);
+        remove_Item_cardView = findViewById(R.id.remove_Item_cardView);
+        add_Item_cardView = findViewById(R.id.add_Item_cardView);
 
-        itemNameEdit=findViewById(R.id.itemNameEdit);
-        itemQuantityEdit=findViewById(R.id.itemQuantityEdit);
-        itemPriceEdit=findViewById(R.id.itemPriceEdit);
-        itemListCard=findViewById(R.id.itemListCard);
+        itemNameEdit = findViewById(R.id.itemNameEdit);
+        itemQuantityEdit = findViewById(R.id.itemQuantityEdit);
+        itemPriceEdit = findViewById(R.id.itemPriceEdit);
+        itemListCard = findViewById(R.id.itemListCard);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-
-                // A new comment has been added, add it to the displayed list
-
-
-                // ...
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-                Toast.makeText(getApplicationContext(), "Failed to load comments.", Toast.LENGTH_SHORT).show();
-            }
-        };
-        databaseReference.addChildEventListener(childEventListener);
 
 
     }
@@ -128,12 +68,41 @@ public class Famers_Dashboard extends AppCompatActivity {
 
     public void remove_item_function(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
         add_Item_cardView.setVisibility(View.GONE);
         remove_Item_cardView.setVisibility(View.VISIBLE);
-        KisanItems demo1 = new KisanItems("demo1","50","60");
+
+        // To retreive data and store item name in itemNameList
+        databaseReference.child("Kisan_Items").child(user.getPhoneNumber())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            KisanItems items = snapshot.getValue(KisanItems.class);
+                            itemNameList.add(items.itemName);
+                            Toast.makeText(getApplicationContext(),items.itemName , Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+        itemNameArray = itemNameList.toArray(new String[0]);
+        ArrayAdapter adapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                itemNameArray
+        );
+        itemListCard.setAdapter(adapter);
+    }
+
+
+        /*KisanItems demo1 = new KisanItems("demo1","50","60");
         KisanItems demo2 = new KisanItems("demo2","506","606");
         Map<String,String> map = new HashMap<String, String>();
-        assert user != null;
+
         map.put(user.getPhoneNumber(),demo1.itemName);
         map.put(user.getPhoneNumber(),demo2.itemName);
         String[] itemNameArray = map.values().toArray(new String[0]);
@@ -144,7 +113,7 @@ public class Famers_Dashboard extends AppCompatActivity {
                 itemNameArray
         );
         itemListCard.setAdapter(adapter);
-    }
+         */
 // CardView Add Item
     public void cancel_item(View view) {
         remove_Item_cardView.setVisibility(View.GONE);
