@@ -3,24 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_margin="2dp"
-    android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineH7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/itemName"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="80dp"
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineH7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/guidelineV8"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,12 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.38" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineH7"
+        android:layout_height="80dp"
         app:layout_constraintLeft_toLeftOf="@id/guidelineV8"
         app:layout_constraintRight_toRightOf="@id/guidelineV9"
         app:layout_constraintTop_toTopOf="parent">
@@ -54,11 +45,12 @@
 
         <TextView
             android:id="@+id/quantity"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/blackb2"
             android:gravity="center"
             android:text="50"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/guidelineSubLayout1"
@@ -103,17 +95,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.80" />
 
     <TextView
         android:id="@+id/price"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="80dp"
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineH7"
         app:layout_constraintLeft_toLeftOf="@id/guidelineV9"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
