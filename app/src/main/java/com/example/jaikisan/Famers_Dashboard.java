@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,14 @@ public class Famers_Dashboard extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         getData();
+        KisanItems demo1 = new KisanItems("demo1","200","100");
+        KisanItems demo2 = new KisanItems("demo2","289","199");
+        KisanItems demo3 = new KisanItems("demo3","200","100");
+        KisanItems demo4 = new KisanItems("demo4","289","199");
+        kisanItemsList.add(demo1);
+        kisanItemsList.add(demo2);
+        kisanItemsList.add(demo3);
+        kisanItemsList.add(demo4);
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecycleAdapter(kisanItemsList,this);
