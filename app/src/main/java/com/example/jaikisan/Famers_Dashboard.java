@@ -3,6 +3,7 @@ package com.example.jaikisan;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class Famers_Dashboard extends AppCompatActivity {
     List<String> itemNameList = new ArrayList<>();
     List<KisanItems> kisanItemsList = new ArrayList<>();
     DatabaseReference databaseReference;
+    RecycleAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,6 @@ public class Famers_Dashboard extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         add_itemButton = findViewById(R.id.add_item_button);
         remove_itemButton = findViewById(R.id.remove_item_button);
-        recyclerView = findViewById(R.id.recyclerview);
 
         LogOutAlertBoxCard = findViewById(R.id.LogOutAlertBoxCard);
         remove_Item_cardView = findViewById(R.id.remove_Item_cardView);
@@ -59,6 +60,10 @@ public class Famers_Dashboard extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         getData();
+        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RecycleAdapter(kisanItemsList,this);
+        recyclerView.setAdapter(adapter);
 
     }
     void getData(){
@@ -90,7 +95,9 @@ public class Famers_Dashboard extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         add_Item_cardView.setVisibility(View.GONE);
         remove_Item_cardView.setVisibility(View.VISIBLE);
-
+        getDataForRemoveItemList();
+    }
+    void getDataForRemoveItemList(){
         // To retreive data and store item name in itemNameList
         databaseReference.child("Kisan_Items").child("+919620533961")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
