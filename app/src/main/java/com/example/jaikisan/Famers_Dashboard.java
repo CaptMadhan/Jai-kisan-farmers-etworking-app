@@ -166,8 +166,9 @@ public class Famers_Dashboard extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             userID = Objects.requireNonNull(user).getPhoneNumber();
             DAOKisan dao = new DAOKisan();
-            dao.addItems(itemName,quantity,price,userID);
-            Toast.makeText(getApplicationContext(),"Item Added",Toast.LENGTH_LONG).show();
+            dao.addItems(itemName,quantity,price,userID).addOnSuccessListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show())
+                    .addOnSuccessListener(sc-> Toast.makeText(getApplicationContext(),"Item Added",Toast.LENGTH_LONG).show());
+            //Toast.makeText(getApplicationContext(),"Item Added",Toast.LENGTH_LONG).show();
             itemNameEdit.setText("");
             itemQuantityEdit.setText("");
             itemPriceEdit.setText("");
