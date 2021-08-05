@@ -53,6 +53,19 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@+id/guidelineLayout2"
             app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/refresh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_action_name"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:onClick="Refresh_Recycler_View"
+            app:layout_constraintLeft_toRightOf="@+id/add_item_button"
+            app:layout_constraintRight_toLeftOf="@+id/remove_item_button"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineLayout2"

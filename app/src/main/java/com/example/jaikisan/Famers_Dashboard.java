@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,7 @@ import java.util.Objects;
 
 public class Famers_Dashboard extends AppCompatActivity {
     Button add_itemButton, remove_itemButton;
+    ImageButton refresh;
     RecyclerView recyclerView;
     CardView LogOutAlertBoxCard, remove_Item_cardView, add_Item_cardView;
 
@@ -38,9 +40,10 @@ public class Famers_Dashboard extends AppCompatActivity {
     ListView itemListCard;
     String[] itemNameArray;
     List<String> itemNameList = new ArrayList<>();
-    List<KisanItems> kisanItemsList = new ArrayList<>();
+    List<KisanItems> kisanItemsList;
     DatabaseReference databaseReference;
     RecycleAdapter adapter;
+    static int count =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class Famers_Dashboard extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         add_itemButton = findViewById(R.id.add_item_button);
         remove_itemButton = findViewById(R.id.remove_item_button);
+        refresh = findViewById(R.id.refresh);
 
         LogOutAlertBoxCard = findViewById(R.id.LogOutAlertBoxCard);
         remove_Item_cardView = findViewById(R.id.remove_Item_cardView);
@@ -60,22 +64,16 @@ public class Famers_Dashboard extends AppCompatActivity {
         itemListCard = findViewById(R.id.itemListCard);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        getData();
-        KisanItems demo1 = new KisanItems("demo1","200","100");
-        KisanItems demo2 = new KisanItems("demo2","289","199");
-        KisanItems demo3 = new KisanItems("demo3","200","100");
-        KisanItems demo4 = new KisanItems("demo4","289","199");
-        kisanItemsList.add(demo1);
-        kisanItemsList.add(demo2);
-        kisanItemsList.add(demo3);
-        kisanItemsList.add(demo4);
+        kisanItemsList= new ArrayList<>();
+
         recyclerView = findViewById(R.id.recyclerview);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecycleAdapter(kisanItemsList,this);
         recyclerView.setAdapter(adapter);
-
+        Refresh_Recycler_View(refresh);
     }
-    void getData(){
+    public void Refresh_Recycler_View(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // To retreive data and store items
         databaseReference.child("Kisan_Items").child("+919620533961"/*user.getPhoneNumber()*/)
@@ -85,7 +83,7 @@ public class Famers_Dashboard extends AppCompatActivity {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             KisanItems items = snapshot.getValue(KisanItems.class);
                             kisanItemsList.add(items);
-                           //Toast.makeText(getApplicationContext(),items.quantity , Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),items.quantity , Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -93,6 +91,13 @@ public class Famers_Dashboard extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+
+        adapter = new RecycleAdapter(kisanItemsList,this);
+        if(count <= 1){
+            recyclerView.setAdapter(adapter);
+            count++;
+        }
+        adapter.notifyDataSetChanged();
     }
 
     public void add_Item_Function(View view) {
@@ -209,4 +214,5 @@ public class Famers_Dashboard extends AppCompatActivity {
             }
         }, 2000);
     }
+
 }
