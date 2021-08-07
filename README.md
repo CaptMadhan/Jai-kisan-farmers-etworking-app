@@ -5,7 +5,12 @@
   
   Mission: Platform for farmers to be financially independent, generate profit and contribute directly to the Nation's GDP, instead of relying only on Middlemen and the demand-supply governing bodies.
 
- <img src="Screenshots/mainActivity.jpg" width="350" title="MainPage"><img src="Screenshots/kisan%20login%20page.jpg" width="350" title="kisan loginpage">
- <img src="Screenshots/consumerLoginPage.jpg" width="350" title="consumerLoginPage"><img src="Screenshots/KisanCreateAC.jpg" width="350" title="KisanCreateAC">
+**Login Views:** </br>
+ <img src="Screenshots/mainActivity.jpg" width="250" title="MainPage"><img src="Screenshots/kisan%20login%20page.jpg" width="250" title="kisan loginpage">
+ <img src="Screenshots/consumerLoginPage.jpg" width="250" title="consumerLoginPage"></br>
+ **Create Account Views:**</br>
+ <img src="Screenshots/KisanCreateAC.jpg" width="250" title="KisanCreateAC"></br>
+ **Farmer's View**</br>
+ **Firebase RealTime DataBase Dashboard**</br>
   <img src="Screenshots/firebase%20RD.jpg" title="firebase RD">
 
