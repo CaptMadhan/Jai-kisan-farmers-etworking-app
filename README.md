@@ -10,7 +10,8 @@
  <img src="Screenshots/consumerLoginPage.jpg" width="250" title="consumerLoginPage"></br>
  **Create Account Views:**</br>
  <img src="Screenshots/KisanCreateAC.jpg" width="250" title="KisanCreateAC"></br>
- **Farmer's View**</br>
+ **Farmer's Dashboard**</br>
+  <img src="Screenshots/Farmer's%20remove%20item%20VIew.jpg" width="250" title="KisanCreateAC"><img src="Screenshots/Farmer's%20Dashboard.jpg" width="250" title="KisanCreateAC"> <img src="Screenshots/Farmer's%20AddItem%20View.jpg" width="250" title="Add item"></br></br>
  **Firebase RealTime DataBase Dashboard**</br>
   <img src="Screenshots/firebase%20RD.jpg" title="firebase RD">
 
