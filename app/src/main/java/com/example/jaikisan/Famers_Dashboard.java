@@ -1,5 +1,6 @@
 package com.example.jaikisan;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -76,10 +77,11 @@ public class Famers_Dashboard extends AppCompatActivity {
     public void Refresh_Recycler_View(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // To retreive data and store items
+        //kisanItemsList= new ArrayList<>();
         databaseReference.child("Kisan_Items").child("+919620533961"/*user.getPhoneNumber()*/)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             KisanItems items = snapshot.getValue(KisanItems.class);
                             kisanItemsList.add(items);
@@ -88,16 +90,16 @@ public class Famers_Dashboard extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
 
         adapter = new RecycleAdapter(kisanItemsList,this);
-        if(count <= 1){
+        adapter.notifyDataSetChanged();
+        if(count <= 2){
             recyclerView.setAdapter(adapter);
             count++;
         }
-        adapter.notifyDataSetChanged();
     }
 
     public void add_Item_Function(View view) {
@@ -116,16 +118,16 @@ public class Famers_Dashboard extends AppCompatActivity {
         databaseReference.child("Kisan_Items").child("+919620533961")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             KisanItems items = snapshot.getValue(KisanItems.class);
-                            itemNameList.add(items.itemName);
+                            itemNameList.add(Objects.requireNonNull(items).itemName);
                             //Toast.makeText(getApplicationContext(),items.itemName , Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
         itemNameArray = itemNameList.toArray(new String[0]);

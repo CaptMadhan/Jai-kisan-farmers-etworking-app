@@ -71,9 +71,9 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder>
     }
     void decrease_quantity(int position, ViewHolder holder){
         DAOKisan dao = new DAOKisan();
-        int newQuantity = Integer.parseInt(data.get(position).itemName);
+        int newQuantity = Integer.parseInt(data.get(position).quantity);
         newQuantity-=1;
-        data.get(position).itemName = String.valueOf(newQuantity);
+        data.get(position).quantity = String.valueOf(newQuantity);
         dao.modifyQuantity(data.get(position).itemName,String.valueOf(newQuantity));
         holder.quantity.setText(String.valueOf(newQuantity));
         Toast.makeText(context," Quantity Updated to "+ data.get(position).quantity,Toast.LENGTH_SHORT).show();
