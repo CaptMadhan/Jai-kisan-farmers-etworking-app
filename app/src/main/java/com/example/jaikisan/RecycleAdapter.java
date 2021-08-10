@@ -70,42 +70,10 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder>
         }
     }
     void decrease_quantity(int position, ViewHolder holder){
-        DAOKisan dao = new DAOKisan();
-        DatabaseReference databaseReference;
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        databaseReference = db.getReference("Kisan_Items");
-        //String strQuantity = databaseReference.child("+919620533961"/*userID*/).child(data.get(position).itemName).child("quantity").getValue();
-        //int newQuantity = Integer.parseInt(strQuantity);
-        //newQuantity-=1;
-        //dao.modifyQuantity(data.get(position).itemName,String.valueOf(newQuantity));
-        //holder.quantity.setText(String.valueOf(newQuantity));
-        Toast.makeText(context," Quantity Updated to "+ data.get(position).quantity,Toast.LENGTH_SHORT).show();
+
     }
     void increase_quantity(int position, RecycleAdapter.ViewHolder holder){
-        DAOKisan dao = new DAOKisan();
-        String strQuantity = getQuantity(position);
-        int newQuantity = Integer.parseInt(strQuantity);
-        newQuantity+=1;
-        dao.modifyQuantity(data.get(position).itemName,String.valueOf(newQuantity));
-        holder.quantity.setText(String.valueOf(newQuantity));
-        Toast.makeText(context," Quantity Updated to "+ data.get(position).quantity,Toast.LENGTH_SHORT).show();
-    }
-    String getQuantity(int position){
-        String[] quantity = new String[1];
-        DatabaseReference databaseReference;
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        databaseReference = db.getReference("Kisan_Items").child("+919620533961"/*userID*/).child(data.get(position).itemName);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                quantity[0] =  dataSnapshot.getValue().toString();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-        return quantity[0];
     }
+
 }
