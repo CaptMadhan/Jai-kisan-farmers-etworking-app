@@ -95,11 +95,13 @@ public class Famers_Dashboard extends AppCompatActivity {
                 });
 
         adapter = new RecycleAdapter(kisanItemsList,this);
-        adapter.notifyDataSetChanged();
+
         if(count <= 2){
             recyclerView.setAdapter(adapter);
             count++;
         }
+        adapter.notifyDataSetChanged();
+        //kisanItemsList.clear();
     }
 
     public void add_Item_Function(View view) {

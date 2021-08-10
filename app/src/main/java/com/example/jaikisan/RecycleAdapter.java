@@ -53,7 +53,6 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder>
     @Override
     // for number of views
     public int getItemCount() {
-
         return data.size();
     }
     // Fetch the custom view created
@@ -79,6 +78,13 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder>
         Toast.makeText(context," Quantity Updated to "+ data.get(position).quantity,Toast.LENGTH_SHORT).show();
     }
     void increase_quantity(int position, RecycleAdapter.ViewHolder holder){
+        DAOKisan dao = new DAOKisan();
+        int newQuantity = Integer.parseInt(data.get(position).quantity);
+        newQuantity+=1;
+        data.get(position).quantity = String.valueOf(newQuantity);
+        dao.modifyQuantity(data.get(position).itemName,String.valueOf(newQuantity));
+        holder.quantity.setText(String.valueOf(newQuantity));
+        Toast.makeText(context," Quantity Updated to "+ data.get(position).quantity,Toast.LENGTH_SHORT).show();
 
     }
 
