@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -11,11 +12,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +42,10 @@ public class Famers_Dashboard extends AppCompatActivity {
     ImageButton refresh;
     RecyclerView recyclerView;
     CardView LogOutAlertBoxCard, remove_Item_cardView, add_Item_cardView;
+    //Delete item onclick of listView
+    ConstraintLayout confirm_delete_item;
+    TextView confirm_delete_itemTextView;
+    Button confirm_delete_itemButton,confirm_delete_itemCancelButton;
 
     EditText itemNameEdit, itemQuantityEdit, itemPriceEdit;
 
@@ -67,6 +74,11 @@ public class Famers_Dashboard extends AppCompatActivity {
         itemQuantityEdit = findViewById(R.id.itemQuantityEdit);
         itemPriceEdit = findViewById(R.id.itemPriceEdit);
         itemListCard = findViewById(R.id.itemListCard);
+        //Item delete onlclick of listView
+         confirm_delete_item = findViewById(R.id.confirm_delete_item);
+         confirm_delete_itemTextView= findViewById(R.id.confirm_delete_itemTextView);
+         confirm_delete_itemButton= findViewById(R.id.confirm_delete_itemButton);
+         confirm_delete_itemCancelButton= findViewById(R.id.confirm_delete_itemCancelButton);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         kisanItemsList= new ArrayList<>();
@@ -147,11 +159,22 @@ public class Famers_Dashboard extends AppCompatActivity {
         );
         itemListCard.setAdapter(adapter);
         itemNameList.clear();
+        itemListCard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String itemToBeDeleted = (String) itemListCard.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(),itemToBeDeleted,Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    public void ConfirmDelete(View view) {
+    }
+    public void Cancel_delete_item_confirmation(View view) {
+        confirm_delete_item.setVisibility(View.GONE);
     }
 
 
-
-// CardView Add Item
+    // CardView Add Item
     public void cancel_item(View view) {
         remove_Item_cardView.setVisibility(View.GONE);
         add_Item_cardView.setVisibility(View.GONE);
@@ -199,6 +222,7 @@ public class Famers_Dashboard extends AppCompatActivity {
     public void cancelLogoutButton(View view) {
         LogOutAlertBoxCard.setVisibility(View.GONE);
     }
+
     int doubleBackToExitPressed = 1;
     @RequiresApi
     @Override
@@ -226,5 +250,7 @@ public class Famers_Dashboard extends AppCompatActivity {
             }
         }, 2000);
     }
+
+
 
 }

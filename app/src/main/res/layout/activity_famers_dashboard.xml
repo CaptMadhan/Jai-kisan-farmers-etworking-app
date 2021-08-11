@@ -351,7 +351,7 @@
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:id="@+id/remove_Item_cardView"
-
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardElevation="20dp"
@@ -381,6 +381,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/confirm_delete_item"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="150dp"
@@ -413,6 +414,7 @@
                     android:layout_marginTop="15dp"
                     android:text="  Confirm  "
                     android:background="@drawable/button_background"
+                    android:onClick="ConfirmDelete"
                     android:textSize="25sp"
                     android:gravity="center"
                     android:textColor="@color/white"
@@ -426,6 +428,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="  Cancel  "
+                    android:onClick="Cancel_delete_item_confirmation"
                     android:background="@drawable/button_background"
                     android:textSize="25sp"
                     android:gravity="center"
