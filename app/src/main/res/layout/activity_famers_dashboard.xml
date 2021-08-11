@@ -351,7 +351,7 @@
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:id="@+id/remove_Item_cardView"
-        android:visibility="gone"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardElevation="20dp"
@@ -379,6 +379,63 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/confirm_delete_item"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginBottom="280dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/main_color_selector">
+                <TextView
+                    android:id="@+id/confirm_delete_itemTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Are you sure to delete"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold|italic"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                <android.widget.Button
+                    android:id="@+id/confirm_delete_itemButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="  Confirm  "
+                    android:background="@drawable/button_background"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/confirm_delete_itemTextView"/>
+                <android.widget.Button
+                    android:id="@+id/confirm_delete_itemCancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="  Cancel  "
+                    android:background="@drawable/button_background"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/confirm_delete_itemButton"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -450,7 +507,10 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/LogoutButton"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.cardview.widget.CardView>
 
