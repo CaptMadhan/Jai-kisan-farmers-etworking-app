@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,9 +24,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -70,9 +74,9 @@ public class Famers_Dashboard extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Refresh_Recycler_View(refresh);
         adapter = new RecycleAdapter(kisanItemsList,this);
         recyclerView.setAdapter(adapter);
-        Refresh_Recycler_View(refresh);
     }
     public void Refresh_Recycler_View(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -93,15 +97,18 @@ public class Famers_Dashboard extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-
+        HashSet<KisanItems> kisanItemsHashSet = new HashSet<>(kisanItemsList);
+        kisanItemsList = new ArrayList<>(kisanItemsHashSet);
         adapter = new RecycleAdapter(kisanItemsList,this);
-
-        if(count <= 2){
-            recyclerView.setAdapter(adapter);
-            count++;
-        }
-        adapter.notifyDataSetChanged();
-        //kisanItemsList.clear();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            public void run() {
+                if(count<=2)
+                    recyclerView.setAdapter(adapter);
+                else
+                    adapter.notifyDataSetChanged();
+                count++;
+            }
+        });
     }
 
     public void add_Item_Function(View view) {
