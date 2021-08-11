@@ -48,7 +48,7 @@ public class Famers_Dashboard extends AppCompatActivity {
     Button confirm_delete_itemButton,confirm_delete_itemCancelButton;
 
     EditText itemNameEdit, itemQuantityEdit, itemPriceEdit;
-
+    String itemToBeDeleted;
     ListView itemListCard;
     String[] itemNameArray;
     List<String> itemNameList = new ArrayList<>();
@@ -162,12 +162,19 @@ public class Famers_Dashboard extends AppCompatActivity {
         itemListCard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String itemToBeDeleted = (String) itemListCard.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(),itemToBeDeleted,Toast.LENGTH_LONG).show();
+                itemToBeDeleted = (String) itemListCard.getItemAtPosition(position);
+                confirm_delete_item.setVisibility(View.VISIBLE);
+                confirm_delete_itemTextView.setText(String.format("Confirm delete item %s", itemToBeDeleted));
+
+                //Toast.makeText(getApplicationContext(),itemToBeDeleted,Toast.LENGTH_LONG).show();
             }
         });
     }
     public void ConfirmDelete(View view) {
+        DAOKisan dao = new DAOKisan();
+        dao.deleteQuantity(itemToBeDeleted);
+        itemToBeDeleted = null;
+        confirm_delete_item.setVisibility(View.GONE);
     }
     public void Cancel_delete_item_confirmation(View view) {
         confirm_delete_item.setVisibility(View.GONE);
@@ -198,7 +205,8 @@ public class Famers_Dashboard extends AppCompatActivity {
 
         try{
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            userID = Objects.requireNonNull(user).getPhoneNumber();
+            //Remove HardCoded UserID
+            userID = "+919620533961";/*userID*/ //Objects.requireNonNull(user).getPhoneNumber();
             DAOKisan dao = new DAOKisan();
             dao.addItems(itemName,quantity,price,userID).addOnSuccessListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show())
                     .addOnSuccessListener(sc-> Toast.makeText(getApplicationContext(),"Item Added",Toast.LENGTH_LONG).show());

@@ -25,6 +25,12 @@ public class DAOKisan {
         databaseReference = db.getReference("Kisan_Items");
         return databaseReference.child("+919620533961"/*userID*/).child(itemName).child("quantity").setValue(newQuantity);
     }
+    public Task<Void> deleteQuantity(String itemName){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //String userID = user.getPhoneNumber();
+        databaseReference = db.getReference("Kisan_Items");
+        return databaseReference.child("+919620533961"/*userID*/).child(itemName).removeValue();
+    }
 
     /*public void writeNewUser(String name, String city,String state,String address, String phone) {
         DatabaseReference mDatabase;
