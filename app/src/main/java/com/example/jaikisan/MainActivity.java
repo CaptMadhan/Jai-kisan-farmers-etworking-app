@@ -40,13 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
     EditText kisanPhoneNumber,kisanOTP;
     Button kisanLoginButton,kisanCreateButton;
-    //TextView kisanForgotPasswordText,consumerForgotPasswordText;
 
     EditText consumerPhoneNumber,consumerOTP;
     Button consumerLoginButton,consumerCreateButton;
 
     EditText farmerFullNameAC,farmer_stateAC,farmer_cityAC,farmer_AddressAC,farmer_PhoneNumberAC,farmer_verify_otp_AC;
     Button farmer_get_otp_AC,finalCreateAC;
+    //Consumer items
+    CardView ConsumerCreateAccountCardView;
+    EditText consumerFullNameAC,consumer_stateAC,consumer_cityAC,consumer_AddressAC,consumer_PhoneNumberAC,consumer_verify_otp_AC;
+    Button consumer_get_otp_AC,consumerFinalCreateAC;
 
     FirebaseAuth mAuth;
     String codeSent;
@@ -83,6 +86,16 @@ public class MainActivity extends AppCompatActivity {
         farmer_AddressAC=findViewById(R.id.farmer_AddressAC);
         farmer_PhoneNumberAC=findViewById(R.id.farmer_PhoneNumberAC);
         farmer_verify_otp_AC=findViewById(R.id.farmer_verify_otp_AC);
+        //Consumer items
+        ConsumerCreateAccountCardView=findViewById(R.id.ConsumerCreateAccountCardView);
+        consumerFullNameAC=findViewById(R.id.consumerFullNameAC);
+        consumer_stateAC=findViewById(R.id.consumer_stateAC);
+        consumer_cityAC=findViewById(R.id.consumer_cityAC);
+        consumer_AddressAC=findViewById(R.id.consumer_AddressAC);
+        consumer_PhoneNumberAC=findViewById(R.id.consumer_PhoneNumberAC);
+        consumer_verify_otp_AC=findViewById(R.id.consumer_verify_otp_AC);
+        consumer_get_otp_AC=findViewById(R.id.consumer_get_otp_AC);
+        consumerFinalCreateAC=findViewById(R.id.consumerFinalCreateAC);
 
         farmer_get_otp_AC=findViewById(R.id.farmer_get_otp_AC);
         finalCreateAC=findViewById(R.id.finalCreateAC);
@@ -238,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
         kisanCardView.setVisibility(View.GONE);
         KisanCreateAccountCardView.setVisibility(View.VISIBLE);
     }
+    public void ConsumerCreateAccountButtonOnClickListener(View view) {
+    }
     public void farmer_Create_AC_OTP_Generate(View view) {
         String phoneNumber = "+91"+farmer_PhoneNumberAC.getText().toString();
         generate_OTP(phoneNumber);
@@ -245,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
     public void Create_Farmer_AC(View view) {
         verifySignIncodeKisan_createAC();
     }
+
     private void verifySignIncodeKisan_createAC(){
         String code = farmer_verify_otp_AC.getText().toString();
         if(code.isEmpty()){
