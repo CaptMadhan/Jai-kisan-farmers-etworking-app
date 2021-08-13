@@ -108,12 +108,14 @@ public class MainActivity extends AppCompatActivity {
         consumerCardView.setVisibility(View.GONE);
         kisanCardView.setVisibility(View.VISIBLE);
         KisanCreateAccountCardView.setVisibility(View.GONE);
+        ConsumerCreateAccountCardView.setVisibility(View.GONE);
     }
 
     public void ConsumerLogin(View view) {
         consumerCardView.setVisibility(View.VISIBLE);
         kisanCardView.setVisibility(View.GONE);
         KisanCreateAccountCardView.setVisibility(View.GONE);
+        ConsumerCreateAccountCardView.setVisibility(View.GONE);
     }
     public void KisanGenerateOTPButton(View view) {
         String phoneNumber = kisanPhoneNumber.getText().toString();
@@ -178,10 +180,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void KisanLoginButtonOnClickListener(View view) {
-        //Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
-        //startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
+        startActivity(intent);
         //uncomment the below line after testing
-        verifySignIncodeKisan();
+        //verifySignIncodeKisan();
     }
 
     public void ConsumerLoginButtonOnClickListener(View view) {
@@ -250,8 +252,13 @@ public class MainActivity extends AppCompatActivity {
         consumerCardView.setVisibility(View.GONE);
         kisanCardView.setVisibility(View.GONE);
         KisanCreateAccountCardView.setVisibility(View.VISIBLE);
+        ConsumerCreateAccountCardView.setVisibility(View.GONE);
     }
     public void ConsumerCreateAccountButtonOnClickListener(View view) {
+        consumerCardView.setVisibility(View.GONE);
+        kisanCardView.setVisibility(View.GONE);
+        KisanCreateAccountCardView.setVisibility(View.GONE);
+        ConsumerCreateAccountCardView.setVisibility(View.VISIBLE);
     }
     public void farmer_Create_AC_OTP_Generate(View view) {
         String phoneNumber = "+91"+farmer_PhoneNumberAC.getText().toString();
@@ -318,6 +325,7 @@ public class MainActivity extends AppCompatActivity {
             consumerCardView.setVisibility(View.GONE);
             kisanCardView.setVisibility(View.VISIBLE);
             KisanCreateAccountCardView.setVisibility(View.GONE);
+            ConsumerCreateAccountCardView.setVisibility(View.GONE);
         }).addOnFailureListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show());
         /*FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
@@ -344,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
         kisanCardView.setVisibility(View.GONE);
         consumerCardView.setVisibility(View.GONE);
         KisanCreateAccountCardView.setVisibility(View.GONE);
+        ConsumerCreateAccountCardView.setVisibility(View.GONE);
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 
