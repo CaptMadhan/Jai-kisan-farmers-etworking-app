@@ -202,7 +202,6 @@ public class Famers_Dashboard extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Enter valid details for all fields",Toast.LENGTH_LONG).show();
             return;
         }
-
         try{
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             //Remove HardCoded UserID
@@ -216,7 +215,8 @@ public class Famers_Dashboard extends AppCompatActivity {
             itemPriceEdit.setText("");
             add_Item_cardView.setVisibility(View.GONE);
             remove_Item_cardView.setVisibility(View.GONE);
-        }catch (Exception e) {
+        }
+        catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Some Error Occurred"+e, Toast.LENGTH_LONG).show();
         }
     }
