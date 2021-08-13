@@ -264,10 +264,17 @@ public class MainActivity extends AppCompatActivity {
         String phoneNumber = "+91"+farmer_PhoneNumberAC.getText().toString();
         generate_OTP(phoneNumber);
     }
+    public void Consumer_Create_AC_OTP_Generate(View view) {
+        String phoneNumber = "+91"+consumer_PhoneNumberAC.getText().toString();
+        generate_OTP(phoneNumber);
+    }
     public void Create_Farmer_AC(View view) {
         verifySignIncodeKisan_createAC();
     }
-
+    public void Create_Consumer_AC(View view) {
+        verifySignIncodeConsumer_createAC();
+    }
+    //Only for Kisan to avoid alternative signIn
     private void verifySignIncodeKisan_createAC(){
         String code = farmer_verify_otp_AC.getText().toString();
         if(code.isEmpty()){
@@ -275,9 +282,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
-        signInWithPhoneAuthCredential_Create_AC(credential);
+        signInWithPhoneAuthCredential_Create_AC_Kisan(credential);
     }
-    private void signInWithPhoneAuthCredential_Create_AC(PhoneAuthCredential credential) {
+    private void signInWithPhoneAuthCredential_Create_AC_Kisan(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -305,6 +312,44 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+    //Only for Consumer to avoid alternative signIn
+    private void verifySignIncodeConsumer_createAC(){
+        String code = consumer_verify_otp_AC.getText().toString();
+        if(code.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Enter OTP",Toast.LENGTH_LONG).show();
+            return;
+        }
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
+        signInWithPhoneAuthCredential_Create_AC_Consumer(credential);
+    }
+    private void signInWithPhoneAuthCredential_Create_AC_Consumer(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();
+                            assert user != null;
+                            long creationTimestamp = Objects.requireNonNull(user.getMetadata()).getCreationTimestamp();
+                            long lastSignInTimestamp = user.getMetadata().getLastSignInTimestamp();
+                            if (creationTimestamp != lastSignInTimestamp) {
+                                Toast.makeText(getApplicationContext(),"Account Already Exists",Toast.LENGTH_LONG).show();
+                            } else {
+                                createNewDBforUser();
+                                //create a database and store all the inputs from create account cardview
+                            }
+                        } else {
+                            // Sign in failed, display a message and update the UI
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                Toast.makeText(getApplicationContext(),"Incorrect Verification code",Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    }
+                });
+    }
 
     private void createNewDBforKisan() {
 
@@ -314,6 +359,39 @@ public class MainActivity extends AppCompatActivity {
         state=farmer_stateAC.getText().toString();
         phone=farmer_PhoneNumberAC.getText().toString();
         address=farmer_AddressAC.getText().toString();
+        if(name.isEmpty()||city.isEmpty()||state.isEmpty()||phone.isEmpty()||address.isEmpty()){
+            Toast.makeText(getApplicationContext(), "Please fill the required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DAOKisan dao = new DAOKisan();
+        dao.add(name,city,state,address,phone).addOnSuccessListener(suc->{
+            Toast.makeText(getApplicationContext(),"Account Created, Please Login Now",Toast.LENGTH_LONG).show();
+            consumerCardView.setVisibility(View.GONE);
+            kisanCardView.setVisibility(View.VISIBLE);
+            KisanCreateAccountCardView.setVisibility(View.GONE);
+            ConsumerCreateAccountCardView.setVisibility(View.GONE);
+        }).addOnFailureListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show());
+        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+         */
+        farmerFullNameAC.setText("");
+        farmer_cityAC.setText("");
+        farmer_stateAC.setText("");
+        farmer_PhoneNumberAC.setText("");
+        farmer_AddressAC.setText("");
+
+    }
+    private void createNewDBforUser() {
+
+        String name,city,state,address,phone;
+        name = consumerFullNameAC.getText().toString();
+        city = consumer_cityAC.getText().toString();
+        state=consumer_stateAC.getText().toString();
+        phone=consumer_PhoneNumberAC.getText().toString();
+        address=consumer_AddressAC.getText().toString();
         if(name.isEmpty()||city.isEmpty()||state.isEmpty()||phone.isEmpty()||address.isEmpty()){
             Toast.makeText(getApplicationContext(), "Please fill the required fields", Toast.LENGTH_SHORT).show();
             return;
@@ -364,5 +442,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
 
 }
