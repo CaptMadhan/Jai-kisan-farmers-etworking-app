@@ -363,7 +363,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ConsumerLogin" />
             <EditText
-                android:id="@+id/ConsumerPassword"
+                android:id="@+id/ConsumerOTP"
                 android:layout_width="0dp"
                 android:layout_height="42dp"
                 android:layout_alignParentTop="true"
@@ -381,13 +381,13 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="20dp"
                 android:background="@drawable/button_background"
-                android:onClick="KisanGenerateOTPButton"
+                android:onClick="ConsumerGenerateOTPButton"
                 android:text="Generate OTP"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ConsumerPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/ConsumerOTP" />
             <android.widget.Button
                 android:id="@+id/ConsumerLoginButton"
                 android:layout_width="292dp"
@@ -396,7 +396,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="20dp"
                 android:background="@drawable/button_background2"
-                android:onClick="KisanLoginButtonOnClickListener"
+                android:onClick="ConsumerLoginButtonOnClickListener"
                 android:text="LogIn"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"

@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Button kisanLoginButton,kisanCreateButton;
     //TextView kisanForgotPasswordText,consumerForgotPasswordText;
 
-    EditText consumerPhoneNumber,consumerPassword;
+    EditText consumerPhoneNumber,consumerOTP;
     Button consumerLoginButton,consumerCreateButton;
 
     EditText farmerFullNameAC,farmer_stateAC,farmer_cityAC,farmer_AddressAC,farmer_PhoneNumberAC,farmer_verify_otp_AC;
@@ -72,9 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
         consumerLoginButton=findViewById(R.id.ConsumerLoginButton);
         consumerPhoneNumber=findViewById(R.id.ConsumerPhoneNumber);
-        consumerPassword=findViewById(R.id.ConsumerPassword);
+        consumerOTP=findViewById(R.id.ConsumerOTP);
         consumerCreateButton=findViewById(R.id.ConsumerCreateAccount);
-        //consumerForgotPasswordText=findViewById(R.id.ConsumerResetPassword);
 
         KisanCreateAccountCardView =findViewById(R.id.KisanCreateAccountCardView);
 
@@ -105,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void KisanGenerateOTPButton(View view) {
         String phoneNumber = kisanPhoneNumber.getText().toString();
+        String temp = "+91"+phoneNumber;
+        generate_OTP(temp);
+    }
+    public void ConsumerGenerateOTPButton(View view) {
+        String phoneNumber = consumerPhoneNumber.getText().toString();
         String temp = "+91"+phoneNumber;
         generate_OTP(temp);
     }
@@ -161,10 +165,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void KisanLoginButtonOnClickListener(View view) {
-        Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
-        startActivity(intent);
+        //Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
+        //startActivity(intent);
         //uncomment the below line after testing
-        //verifySignIncodeKisan();
+        verifySignIncodeKisan();
+    }
+
+    public void ConsumerLoginButtonOnClickListener(View view) {
+        verifySignIncodeConsumer();
     }
     //For Kisan Login Auth only
     private void verifySignIncodeKisan(){
@@ -174,9 +182,21 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
-        signInWithPhoneAuthCredential_LOGIN(credential);
+        signInWithPhoneAuthCredential_LOGIN(credential,0);
+        //userType = 0 -> Farmer
+        //userType = 1 -> Consumer
+     }
+    //For Consumer Login Auth
+    private void verifySignIncodeConsumer(){
+        String code = consumerOTP.getText().toString();
+        if(code.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Enter OTP",Toast.LENGTH_LONG).show();
+            return;
+        }
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
+        signInWithPhoneAuthCredential_LOGIN(credential,1);
     }
-    private void signInWithPhoneAuthCredential_LOGIN(PhoneAuthCredential credential) {
+    private void signInWithPhoneAuthCredential_LOGIN(PhoneAuthCredential credential, int userType) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -188,12 +208,18 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();
                             long creationTimestamp = Objects.requireNonNull(Objects.requireNonNull(user).getMetadata()).getCreationTimestamp();
                             long lastSignInTimestamp = Objects.requireNonNull(user.getMetadata()).getLastSignInTimestamp();
-                            if (creationTimestamp == lastSignInTimestamp) {
+                            if (creationTimestamp == lastSignInTimestamp ) {
                                 Toast.makeText(getApplicationContext(),"Please create Account first",Toast.LENGTH_LONG).show();
                                 user.delete();
                             } else {
-                                Intent intent = new Intent(getApplicationContext(),Famers_Dashboard.class);
-                                startActivity(intent);
+                                if(userType == 0) {
+                                    Intent intent = new Intent(getApplicationContext(), Famers_Dashboard.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Intent intent = new Intent(getApplicationContext(), Consumer_Dashboard.class);
+                                    startActivity(intent);
+                                }
                             }
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -290,16 +316,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Consumer CardView Functions
-    public void ConsumerLoginOnClickListener(View view) {
-    }
-
-    public void ConsumerCreateAccOnClickListener(View view) {
-    }
-
-    public void consumerForgotPasswordOnClickListener(View view) {
-    }
-
     //Back Button functions
     boolean doubleBackToExitPressedOnce = false;
     @Override
@@ -323,4 +339,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
 }
