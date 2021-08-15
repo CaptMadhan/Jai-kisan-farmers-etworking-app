@@ -4,6 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_color_selector2"
     tools:context=".Consumer_Dashboard">
+    <EditText
+        android:id="@+id/searchET"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:hint="Search here"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@drawable/curved_border"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/curved_border"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <android.widget.Button
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/ic_baseline_search_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/farmerNameTable"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:text="Kisan's Name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/consumer_recycler_background"
+        app:layout_constraintTop_toBottomOf="@+id/searchET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/farmersListBOX"
+        />
+    <TextView
+        android:id="@+id/farmerCityTable"
+        android:layout_width="172dp"
+        android:layout_height="0dp"
+        android:text="Kisan's City"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/consumer_recycler_background"
+        app:layout_constraintTop_toBottomOf="@+id/searchET"
+        app:layout_constraintLeft_toRightOf="@+id/farmerNameTable"
+        app:layout_constraintBottom_toTopOf="@+id/farmersListBOX"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/farmersListBOX"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:background="@drawable/consumer_recycler_background"
+        app:layout_constraintTop_toBottomOf="@+id/searchET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
