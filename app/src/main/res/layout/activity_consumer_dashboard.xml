@@ -29,10 +29,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <android.widget.Button
+        android:id="@+id/searchButton"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="20dp"
+        android:onClick="search_farmer"
         android:background="@drawable/ic_baseline_search_24"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -51,11 +53,11 @@
         android:background="@drawable/consumer_recycler_background"
         app:layout_constraintTop_toBottomOf="@+id/searchET"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/farmersListBOX"
+        app:layout_constraintBottom_toTopOf="@+id/farmersListRecyclerView"
         />
     <TextView
         android:id="@+id/farmerCityTable"
-        android:layout_width="172dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Kisan's City"
         android:textSize="20sp"
@@ -67,10 +69,11 @@
         android:background="@drawable/consumer_recycler_background"
         app:layout_constraintTop_toBottomOf="@+id/searchET"
         app:layout_constraintLeft_toRightOf="@+id/farmerNameTable"
-        app:layout_constraintBottom_toTopOf="@+id/farmersListBOX"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/farmersListRecyclerView"
         />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/farmersListBOX"
+        android:id="@+id/farmersListRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="80dp"
