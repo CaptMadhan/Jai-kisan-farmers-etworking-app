@@ -187,7 +187,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ConsumerLoginButtonOnClickListener(View view) {
-        verifySignIncodeConsumer();
+        Intent intent = new Intent(getApplicationContext(),Consumer_Dashboard.class);
+        startActivity(intent);
+        //uncomment the below line after testing
+        //verifySignIncodeConsumer();
     }
     //For Kisan Login Auth only
     private void verifySignIncodeKisan(){
@@ -273,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
         verifySignIncodeKisan_createAC();
     }
     public void Create_Consumer_AC(View view) {
-
         //verifySignIncodeConsumer_createAC();
         //Delete the below line to apply AUTH
         createNewDBforConsumer();
