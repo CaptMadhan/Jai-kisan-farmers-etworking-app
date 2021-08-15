@@ -378,11 +378,6 @@ public class MainActivity extends AppCompatActivity {
             KisanCreateAccountCardView.setVisibility(View.GONE);
             ConsumerCreateAccountCardView.setVisibility(View.GONE);
         }).addOnFailureListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show());
-        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-         */
         farmerFullNameAC.setText("");
         farmer_cityAC.setText("");
         farmer_stateAC.setText("");

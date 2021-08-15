@@ -172,7 +172,9 @@ public class Famers_Dashboard extends AppCompatActivity {
     }
     public void ConfirmDelete(View view) {
         DAOKisan dao = new DAOKisan();
-        dao.deleteQuantity(itemToBeDeleted);
+        dao.deleteQuantity(itemToBeDeleted).addOnSuccessListener(suc->{
+            Toast.makeText(getApplicationContext(),"Item Deleted",Toast.LENGTH_LONG).show();
+        }).addOnFailureListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show());
         itemToBeDeleted = null;
         confirm_delete_item.setVisibility(View.GONE);
     }
