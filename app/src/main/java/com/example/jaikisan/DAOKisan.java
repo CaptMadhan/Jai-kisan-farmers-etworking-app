@@ -31,11 +31,4 @@ public class DAOKisan {
         databaseReference = db.getReference("Kisan_Items");
         return databaseReference.child("+919620533961"/*userID*/).child(itemName).removeValue();
     }
-
-    /*public void writeNewUser(String name, String city,String state,String address, String phone) {
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        MainActivity.KisanUserDetails user = new MainActivity.KisanUserDetails(name,city,state,address,phone);
-        mDatabase.child("users").child(phone).setValue(user);
-    }*/
 }

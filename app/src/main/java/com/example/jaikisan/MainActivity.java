@@ -269,10 +269,14 @@ public class MainActivity extends AppCompatActivity {
         generate_OTP(phoneNumber);
     }
     public void Create_Farmer_AC(View view) {
+
         verifySignIncodeKisan_createAC();
     }
     public void Create_Consumer_AC(View view) {
-        verifySignIncodeConsumer_createAC();
+
+        //verifySignIncodeConsumer_createAC();
+        //Delete the below line to apply AUTH
+        createNewDBforConsumer();
     }
     //Only for Kisan to avoid alternative signIn
     private void verifySignIncodeKisan_createAC(){
@@ -336,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
                             if (creationTimestamp != lastSignInTimestamp) {
                                 Toast.makeText(getApplicationContext(),"Account Already Exists",Toast.LENGTH_LONG).show();
                             } else {
-                                createNewDBforUser();
+                                createNewDBforConsumer();
                                 //create a database and store all the inputs from create account cardview
                             }
                         } else {
@@ -384,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
         farmer_AddressAC.setText("");
 
     }
-    private void createNewDBforUser() {
+    private void createNewDBforConsumer() {
 
         String name,city,state,address,phone;
         name = consumerFullNameAC.getText().toString();
@@ -397,11 +401,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        DAOKisan dao = new DAOKisan();
+        DAOConsumer dao = new DAOConsumer();
         dao.add(name,city,state,address,phone).addOnSuccessListener(suc->{
             Toast.makeText(getApplicationContext(),"Account Created, Please Login Now",Toast.LENGTH_LONG).show();
-            consumerCardView.setVisibility(View.GONE);
-            kisanCardView.setVisibility(View.VISIBLE);
+            consumerCardView.setVisibility(View.VISIBLE);
+            kisanCardView.setVisibility(View.GONE);
             KisanCreateAccountCardView.setVisibility(View.GONE);
             ConsumerCreateAccountCardView.setVisibility(View.GONE);
         }).addOnFailureListener(er-> Toast.makeText(getApplicationContext(),"Error Occurred, Please try again",Toast.LENGTH_LONG).show());
@@ -410,11 +414,11 @@ public class MainActivity extends AppCompatActivity {
 
         myRef.setValue("Hello, World!");
          */
-        farmerFullNameAC.setText("");
-        farmer_cityAC.setText("");
-        farmer_stateAC.setText("");
-        farmer_PhoneNumberAC.setText("");
-        farmer_AddressAC.setText("");
+        consumerFullNameAC.setText("");
+        consumer_cityAC.setText("");
+        consumer_stateAC.setText("");
+        consumer_PhoneNumberAC.setText("");
+        consumer_AddressAC.setText("");
 
     }
 
