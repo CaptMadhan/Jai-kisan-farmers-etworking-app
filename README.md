@@ -1,9 +1,8 @@
 # Jai-kisan-farmers-networking-app
-  This Application focuses on building an online profile for farmers, showcase their inventory online, and attract end-consumers and build business with them as a side business.
+  This Application focuses on building an online profile for farmers, showcase their inventory online, and attract end-consumers and sell their goods Online as a side hustle.
+  End-consumers and entrepreneurs based on agriculture goods and services can get direct contact with farmers and promote their business and generate profit.
   
-  Also End-consumers and entrepreneurs based on agriculture goods and services can get direct contact with farmers and promote their business and generate profit.
-  
-  Mission: Platform for farmers to be financially independent, generate profit and contribute directly to the Nation's GDP, instead of relying only on Middlemen and the demand-supply governing bodies.
+  Mission: Build a robust platform for farmers which helps them generate profit and contribute directly to the Nation's GDP.
 
 **Login Views:** </br>
  <img src="Screenshots/mainActivity.jpg" width="250" title="MainPage"><img src="Screenshots/kisan%20login%20page.jpg" width="250" title="kisan loginpage">
