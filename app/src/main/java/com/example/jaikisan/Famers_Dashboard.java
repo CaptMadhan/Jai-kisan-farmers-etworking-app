@@ -28,13 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class Famers_Dashboard extends AppCompatActivity {
@@ -54,7 +50,7 @@ public class Famers_Dashboard extends AppCompatActivity {
     List<String> itemNameList = new ArrayList<>();
     List<KisanItems> kisanItemsList;
     DatabaseReference databaseReference;
-    RecycleAdapter adapter;
+    RecyclerAdapterKisan adapter;
     static int count =0;
 
     @Override
@@ -87,7 +83,7 @@ public class Famers_Dashboard extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         Refresh_Recycler_View(refresh);
-        adapter = new RecycleAdapter(kisanItemsList,this);
+        adapter = new RecyclerAdapterKisan(kisanItemsList,this);
         recyclerView.setAdapter(adapter);
     }
     public void Refresh_Recycler_View(View view) {
@@ -111,7 +107,7 @@ public class Famers_Dashboard extends AppCompatActivity {
                 });
         HashSet<KisanItems> kisanItemsHashSet = new HashSet<>(kisanItemsList);
         kisanItemsList = new ArrayList<>(kisanItemsHashSet);
-        adapter = new RecycleAdapter(kisanItemsList,this);
+        adapter = new RecyclerAdapterKisan(kisanItemsList,this);
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
                 if(count<=2)
