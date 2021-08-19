@@ -1,6 +1,7 @@
 package com.example.jaikisan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,14 @@ public class RecyclerAdapterConsumer extends RecyclerView.Adapter<RecyclerAdapte
     public void onBindViewHolder(@NonNull RecyclerAdapterConsumer.ViewHolder holder, int position) {
         holder.KisanName.setText(data.get(position).name);
         holder.KisanCity.setText(data.get(position).city);
+        holder.KisanName.setOnClickListener(v ->showFarmerProfile(data));
+        holder.KisanCity.setOnClickListener(v ->showFarmerProfile(data));
 
+    }
+
+    void showFarmerProfile(List<KisanUserDetails> data) {
+        Intent intent = new Intent(context,MainActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
