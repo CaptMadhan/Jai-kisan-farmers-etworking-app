@@ -43,6 +43,9 @@ public class Famers_Dashboard extends AppCompatActivity {
     TextView confirm_delete_itemTextView;
     Button confirm_delete_itemButton,confirm_delete_itemCancelButton;
 
+    //Kisan's Profile
+    TextView kisan_name;
+
     EditText itemNameEdit, itemQuantityEdit, itemPriceEdit;
     String itemToBeDeleted;
     ListView itemListCard;
