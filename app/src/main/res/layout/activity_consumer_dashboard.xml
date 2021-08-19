@@ -111,6 +111,7 @@
     <!-- Farmer's profile -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/KisanProfile"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
@@ -252,8 +253,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kisanPhoneNumberTV"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/kisanPhoneNumberTV">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineH7"
@@ -320,7 +320,39 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guidelineH7"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintBottom_toTopOf="@+id/kisanCallButton"/>
+            <android.widget.Button
+                android:id="@+id/kisanCallButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:text="Call Kisan"
+                android:textColor="@color/cream"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:background="@drawable/button_background"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+                app:layout_constraintBottom_toTopOf="@+id/goBackButton"
+                />
+            <android.widget.Button
+                android:id="@+id/goBackButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Go Back"
+                android:textColor="@color/cream"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_background2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/kisanCallButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

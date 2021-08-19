@@ -44,7 +44,10 @@ public class Famers_Dashboard extends AppCompatActivity {
     Button confirm_delete_itemButton,confirm_delete_itemCancelButton;
 
     //Kisan's Profile
-    TextView kisan_name;
+    ConstraintLayout kisans_profileLayout;
+    TextView kisan_nameTitle;
+    Button kisanCallButton,goBackButton;
+    TextView FetchedKisanPhoneNumber,FetchedKisanAddress,FetchedKisanState,FetchedKisanName;
 
     EditText itemNameEdit, itemQuantityEdit, itemPriceEdit;
     String itemToBeDeleted;
@@ -73,6 +76,17 @@ public class Famers_Dashboard extends AppCompatActivity {
         itemQuantityEdit = findViewById(R.id.itemQuantityEdit);
         itemPriceEdit = findViewById(R.id.itemPriceEdit);
         itemListCard = findViewById(R.id.itemListCard);
+
+        //Kisan's Profile View variables
+        kisans_profileLayout= findViewById(R.id.KisanProfile);
+        kisan_nameTitle= findViewById(R.id.kisan_nameTitle);
+        kisanCallButton= findViewById(R.id.kisanCallButton);
+        goBackButton= findViewById(R.id.goBackButton);
+        FetchedKisanPhoneNumber= findViewById(R.id.FetchedKisanPhoneNumber);
+        FetchedKisanAddress= findViewById(R.id.FetchedKisanAddress);
+        FetchedKisanState= findViewById(R.id.FetchedKisanState);
+        FetchedKisanName= findViewById(R.id.FetchedKisanName);
+
         //Item delete onlclick of listView
          confirm_delete_item = findViewById(R.id.confirm_delete_item);
          confirm_delete_itemTextView= findViewById(R.id.confirm_delete_itemTextView);
