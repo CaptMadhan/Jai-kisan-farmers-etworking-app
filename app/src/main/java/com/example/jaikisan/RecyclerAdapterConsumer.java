@@ -38,13 +38,18 @@ public class RecyclerAdapterConsumer extends RecyclerView.Adapter<RecyclerAdapte
     public void onBindViewHolder(@NonNull RecyclerAdapterConsumer.ViewHolder holder, int position) {
         holder.KisanName.setText(data.get(position).name);
         holder.KisanCity.setText(data.get(position).city);
-        holder.KisanName.setOnClickListener(v ->showFarmerProfile(data));
-        holder.KisanCity.setOnClickListener(v ->showFarmerProfile(data));
+        holder.KisanName.setOnClickListener(v ->showFarmerProfile(data.get(position)));
+        holder.KisanCity.setOnClickListener(v ->showFarmerProfile(data.get(position)));
 
     }
 
-    void showFarmerProfile(List<KisanUserDetails> data) {
-        Intent intent = new Intent(context,MainActivity.class);
+    void showFarmerProfile(KisanUserDetails data) {
+        Intent intent = new Intent(context,Consumer_farmer_profile.class);
+        intent.putExtra("Farmer Name",data.name);
+        intent.putExtra("Farmer phone",data.phone);
+        intent.putExtra("Farmer address",data.address);
+        intent.putExtra("Farmer state",data.state);
+        intent.putExtra("Farmer city",data.city);
         context.startActivity(intent);
     }
 
