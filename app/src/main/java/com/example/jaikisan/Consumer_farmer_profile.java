@@ -55,5 +55,9 @@ public class Consumer_farmer_profile extends AppCompatActivity {
     }
 
     public void message_Farmer(View view) {
+        Uri uri = Uri.parse("smsto:+91 "+phoneNoStr);
+        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+        intent.putExtra("sms_body", "Hello, I would like to contact you regarding your farming goods");
+        startActivity(intent);
     }
 }
