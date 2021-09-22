@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +22,7 @@ public class Consumer_farmer_profile extends AppCompatActivity {
     TextView layout_title,name,state,city,phoneNo;
     RecyclerView recyclerView_consumer;
     Button call,message;
+    String nameStr,stateStr,cityStr,phoneNoStr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,18 +36,22 @@ public class Consumer_farmer_profile extends AppCompatActivity {
         call = findViewById(R.id.call_button);
         message = findViewById(R.id.message_button);
         Bundle extras = getIntent().getExtras();
-        layout_title.setText(extras.getString("Farmer Name") +"'s Dashboard");
-        name.setText(extras.getString("Farmer Name"));
-        phoneNo.setText(extras.getString("Farmer phone"));
+        nameStr=extras.getString("Farmer Name");
+        stateStr=extras.getString("Farmer state");
+        cityStr=extras.getString("Farmer city");
+        phoneNoStr=extras.getString("Farmer phone");
+        layout_title.setText( nameStr+"'s Dashboard");
+        name.setText(nameStr);
+        phoneNo.setText(phoneNoStr);
         //address = extras.getString("Farmer address");
-        state.setText(extras.getString("Farmer state"));
-        city.setText(extras.getString("Farmer city"));
-
-
-
+        state.setText(stateStr);
+        city.setText(cityStr);
     }
 
     public void call_Farmer(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:+91 "+phoneNoStr));
+        startActivity(intent);
     }
 
     public void message_Farmer(View view) {
