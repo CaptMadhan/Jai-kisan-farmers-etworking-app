@@ -43,6 +43,10 @@ public class RecyclerAdapterConsumer extends RecyclerView.Adapter<RecyclerAdapte
 
     }
 
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
     void showFarmerProfile(KisanUserDetails data) {
         Intent intent = new Intent(context,Consumer_farmer_profile.class);
         intent.putExtra("Farmer Name",data.name);
@@ -51,11 +55,6 @@ public class RecyclerAdapterConsumer extends RecyclerView.Adapter<RecyclerAdapte
         intent.putExtra("Farmer state",data.state);
         intent.putExtra("Farmer city",data.city);
         context.startActivity(intent);
-    }
-
-    @Override
-    public int getItemCount() {
-        return data.size();
     }
     // Fetch the custom view created
     public static class ViewHolder extends RecyclerView.ViewHolder {
