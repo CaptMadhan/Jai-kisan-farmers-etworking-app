@@ -48,7 +48,6 @@ public class Consumer_farmer_profile extends AppCompatActivity {
         layout_title.setText(nameStr + "'s Dashboard");
         name.setText(nameStr);
         phoneNo.setText(phoneNoStr);
-        //address = extras.getString("Farmer address");
         state.setText(stateStr);
         city.setText(cityStr);
 
