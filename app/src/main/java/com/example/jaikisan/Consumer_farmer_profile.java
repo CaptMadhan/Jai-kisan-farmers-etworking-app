@@ -1,20 +1,16 @@
 package com.example.jaikisan;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class Consumer_farmer_profile extends AppCompatActivity {
     TextView layout_title,name,state,city,phoneNo;
@@ -30,11 +26,12 @@ public class Consumer_farmer_profile extends AppCompatActivity {
     Button call,message;
     String nameStr,stateStr,cityStr,phoneNoStr;
     DatabaseReference databaseReference;
-    List<KisanItems> kisanItemsList;
+    ArrayList<KisanItems> kisanItemsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consumer_farmer_profile);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         layout_title=findViewById(R.id.title_farmers_name);
         name=findViewById(R.id.fullName);
         state = findViewById(R.id.state);
@@ -48,7 +45,7 @@ public class Consumer_farmer_profile extends AppCompatActivity {
         stateStr=extras.getString("Farmer state");
         cityStr=extras.getString("Farmer city");
         phoneNoStr=extras.getString("Farmer phone");
-        layout_title.setText( nameStr+"'s Dashboard");
+        layout_title.setText(nameStr + "'s Dashboard");
         name.setText(nameStr);
         phoneNo.setText(phoneNoStr);
         //address = extras.getString("Farmer address");
@@ -56,11 +53,17 @@ public class Consumer_farmer_profile extends AppCompatActivity {
         city.setText(cityStr);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        kisanItemsList=getItems(phoneNoStr);
-
-    }
-    public static ArrayList<KisanItems> getItems(String phoneNoStr){
-        ArrayList<KisanItems> kisanItemsList = new ArrayList<>();
+        kisanItemsList = new ArrayList<>();
+        /* Challenge faced: Couldn't add value to kisanItemList, because it forgets the value added as soon as the
+        OnDatachange function is run, because this function runs asynchronously.
+        Solution found here -> https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method/47853774
+         */
+        MyCallback myCallback = new MyCallback() {
+            @Override
+            public void onCallback(KisanItems value) {
+                kisanItemsList.add(value);
+            }
+        };
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Kisan_Items").child("+91"+phoneNoStr)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -68,8 +71,9 @@ public class Consumer_farmer_profile extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             KisanItems items = snapshot.getValue(KisanItems.class);
-                            kisanItemsList.add(items);
-                            //Toast.makeText(getApplicationContext(),items.quantity , Toast.LENGTH_SHORT).show();
+                            //kisanItemsList.add(items);
+                            myCallback.onCallback(items);
+                            //Toast.makeText(getApplicationContext(),items.itemName , Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -77,9 +81,22 @@ public class Consumer_farmer_profile extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-        return kisanItemsList;
-    }
+        RecyclerAdapterKisanProfile adapter;
+        recyclerView_consumer.setLayoutManager(new LinearLayoutManager(this));
+        /*
+        //KisanItems items = new KisanItems("somethin","90","500");
+        KisanItems items2 = new KisanItems("something","90","500");
+        //kisanItemsList.add(items);
+        kisanItemsList.add(items2);
+        //Toast.makeText(getApplicationContext(), ""+kisanItemsList.size(), Toast.LENGTH_SHORT).show();
+        */
+        adapter = new RecyclerAdapterKisanProfile(kisanItemsList,this);
+        recyclerView_consumer.setAdapter(adapter);
 
+    }
+    public interface MyCallback {
+        void onCallback(KisanItems value);
+    }
     public void call_Farmer(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:+91 "+phoneNoStr));
