@@ -12,7 +12,7 @@
  **Farmer's Dashboard**</br>
   <img src="Screenshots/Farmer's%20Dashboard.jpg" width="250" title="Dashboard"><img src="Screenshots/Farmer's%20remove%20item%20VIew.jpg" width="250" title="Remove Item"> <img src="Screenshots/Farmer's%20AddItem%20View.jpg" width="250" title="Add item"></br></br>
   **Consumer's Dashboard**</br>
-  <img src="Screenshots/Farmer's%20Profile%20in%20Consumer%20View.jpg" width="250" title="Farmer's profile"></br>
+  <img src="Screenshots/Consumer's%20DashBoard.jpg" width="250" title="Dashboard"><img src="Screenshots/Farmer's%20Profile%20in%20Consumer%20View.jpg" width="250" title="Farmer's profile"></br>
  **Firebase RealTime DataBase Dashboard**</br>
   <img src="Screenshots/Firebase%20RT%20DB.jpg" title="firebase RD"><img src="Screenshots/consumerDetailsInFirebaseDB.jpg" title="Kisan RD">
 
