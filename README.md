@@ -1,5 +1,5 @@
 # Jai-kisan-farmers-networking-app
-  This Application focuses on building an online profile for farmers, showcase their inventory online, and attract end-consumers and sell their goods Online as a side hustle.
+  This Application focuses on building an online profile for farmers, showcase their inventory online, and attract end-consumers to sell their goods online as a side hustle.
   End-consumers and entrepreneurs based on agriculture goods and services can get direct contact with farmers and promote their business and generate profit. </br>
   ***Tools used: Android Studio, Firebase Auth, Firebase RealTime Database.***
   
